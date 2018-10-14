@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/rastogi-s/JSONObjectModifier/issues"
   },
-  "homepage": "https://github.com/rastogi-s/JSONObjectModifier#readme"
+  "homepage": "https://github.com/rastogi-s/JSONObjectModifier#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "md5": "^2.2.1"
+  }
 }
