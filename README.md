@@ -4,7 +4,7 @@
 
 ### Links:
 Please use the below link to access the application on heroku
-[URL-Shortener](https://urlshortnerapp.herokuapp.com)
+[Basic-REST-API](https://basic-rest-api-exercise.herokuapp.com/)
 
 ### Technologies Used :
 
