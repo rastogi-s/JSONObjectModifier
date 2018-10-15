@@ -11,7 +11,7 @@ module.exports = function (app) {
     app.post('/api/objects', createObject);
     app.put('/api/objects/:uid', updateObject);
     app.get('/api/objects/:uid', getObjectById);
-    app.get('/api/objects/:uid', getAllObjects);
+    app.get('/api/objects', getAllObjects);
     app.delete('/api/objects/:uid', deleteObject);
 
 
@@ -106,15 +106,27 @@ module.exports = function (app) {
 
 
     /**
-     * Fetches a new object corresponding to a uid.
+     * Fetches a new object corresponding to an uid.
      *
      * @param req request object.
      * @param res response object.
      */
     function getObjectById(req, res) {
         var uid = req.params['uid'];
-
-
+        readFile().then(data => {
+            let jsonObj = JSON.parse(data);
+            if (jsonObj !== undefined && jsonObj.list !== undefined) {
+                let index = jsonObj.list.findIndex(obj => obj.uid === uid);
+                if (index > -1)
+                    res.status(200).json(jsonObj.list[index]);
+                else
+                    res.status(404).json({
+                        "verb": req.method,
+                        "url": req.protocol + '://' + req.get('host') + req.originalUrl,
+                        "message": "No object to corresponding uid was found."
+                    });
+            }
+        })
     }
 
 
@@ -125,8 +137,17 @@ module.exports = function (app) {
      * @param res response object.
      */
     function getAllObjects(req, res) {
-
-
+        readFile().then(data => {
+            let jsonObj = JSON.parse(data);
+            if (jsonObj !== undefined && jsonObj.list !== undefined && jsonObj.list.length !== 0)
+                res.status(200).json(jsonObj.list);
+            else
+                res.status(404).json({
+                    "verb": req.method,
+                    "url": req.protocol + '://' + req.get('host') + req.originalUrl,
+                    "message": "No object present."
+                });
+        })
     }
 
     /**
@@ -137,7 +158,20 @@ module.exports = function (app) {
      */
     function deleteObject(req, res) {
         var uid = req.params['uid'];
+        readFile().then(data => {
+            let jsonObj = JSON.parse(data);
+            if (jsonObj !== undefined && jsonObj.list !== undefined) {
+                let index = jsonObj.list.findIndex(obj => obj.uid === uid);
+                if (index > -1) {
+                    jsonObj.list.splice(index, 1);
 
+                }
+                return jsonObj;
+            }
+        }).then((jsonObject) =>
+            writeFile(jsonObject)).then(() =>
+            res.sendStatus(200)).catch(error =>
+            console.log(error));
     }
 
 
@@ -177,4 +211,5 @@ module.exports = function (app) {
         return true;
     }
 
-};
+}
+;
