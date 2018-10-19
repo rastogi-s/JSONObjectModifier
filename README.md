@@ -55,5 +55,12 @@ Delete a particular object using the unique identifier : ``\api\objects\{uid}``
 
 Tested manually using POSTMAN and added automated tested.
 
+### Overview of the  Application:
+
+This application provided REST end points which can be used to create a new arbitrary objects. 
+When a new object is created a unique id is generated for each object using md5 hashing algorithm. The object is then stored in the JSON file. The JSON file is read using IO operation and then parsed into a JSON object and then the new object is appended to the list of already created objects.
+The PUT i.e. update or create checks if the uid passed as a param is present in the list of objects stored in the JSON file. If it exists the object replaced with the passed object. If the key is not present the new object is inseted with key passed as param.
+The API allows deletion and get features. The delete method removes the object from the object list if present and then writes back the list to the JSON file. The user has the ability to get all objects and or fetch a particular object.
+
 
 
