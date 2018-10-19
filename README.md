@@ -62,5 +62,12 @@ When a new object is created a unique id is generated for each object using md5 
 The PUT i.e. update or create checks if the uid passed as a param is present in the list of objects stored in the JSON file. If it exists the object replaced with the passed object. If the key is not present the new object is inseted with key passed as param.
 The API allows deletion and get features. The delete method removes the object from the object list if present and then writes back the list to the JSON file. The user has the ability to get all objects and or fetch a particular object.
 
+### Possible Extension Of the Application.
+
+1. This application could be extended to use a NoSQL database like MongoDB for storing the json objects.
+2. This application could be extended to provide PATCH method also.
+3. This application could be extended to provide an authtication feature for users.
+
+
 
 
